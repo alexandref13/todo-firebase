@@ -10,7 +10,11 @@ class TodoRepository implements ITodoRepository {
 
   @override
   Stream<List<TodoModel>> getTodo() {
-    return firestore.collection('todo').snapshots().map((query) {
+    return firestore
+        .collection('todo')
+        .orderBy('position')
+        .snapshots()
+        .map((query) {
       return query.docs.map((document) {
         return TodoModel.fromDocument(document);
       }).toList();
